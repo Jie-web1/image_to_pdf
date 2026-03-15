@@ -17,8 +17,8 @@
 ## 安装
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/file-converter.git
-cd file-converter
+git clone https://github.com/Jie-web1/data-visualization-dashboard.git
+cd data-visualization-dashboard
 pip install -r requirements.txt
 ```
 
