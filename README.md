@@ -1,68 +1,61 @@
-# Interactive Global Data Dashboard
+# 文件转换器 (Image to PDF & More)
 
-基于 React 的交互式数据看板：全球经济与人口趋势图表与数据展示。
-
-**GitHub 仓库：** https://github.com/Jie-web1/data-visualization-dashboard  
-**在线访问（部署后）：** https://jie-web1.github.io/data-visualization-dashboard/
-
----
+图片转 PDF、图片格式/缩放、文本编码与换行符转换。支持 **Web 前端** 与命令行。
 
 ## 功能
 
-- **GDP 趋势（折线图）**：多国 GDP 对比、悬停提示与国家选择
-- **人口排名（柱状图）**：Top 15 国家、年份选择、排序与动画
-- **GDP vs 预期寿命（散点图）**：关系探索与国家详情
+- **img2pdf**：多张图片合并为一个 PDF（支持 PNG、JPG、GIF、BMP、TIFF、WebP）
+- **图片转换**：格式转换（PNG/JPEG/WebP/BMP/TIFF）、按比例或最大宽高缩放
+- **文本编码**：UTF-8、GBK 等编码互转
+- **换行符**：LF ↔ CRLF 转换
 
-## 技术栈
+## 环境与安装
 
-- 前端：React 18、Vite
-- 图表：Chart.js、react-chartjs-2
-- 数据：PapaParse (CSV)，World Bank 风格数据集
+- Python 3.8+
+- `pip install -r requirements.txt`
 
-## 本地运行
+## 运行方式
 
-```bash
-npm install
-npm run dev
-```
-
-打开 http://localhost:5173 。
-
-## 部署到 GitHub Pages
-
-1. `package.json` 中 `homepage` 已指向：`https://Jie-web1.github.io/data-visualization-dashboard`
-
-2. 部署：
+**Web 前端：**
 
 ```bash
-npm run deploy
+python app.py
 ```
 
-3. 仓库 **Settings → Pages → Source** 选择 **gh-pages** 分支。
+浏览器打开 http://127.0.0.1:5000 ，使用页面完成转换，结果直接下载。文件仅在本地临时处理。
+
+**命令行：**
+
+```bash
+# 图片 → PDF
+python run.py img2pdf 图1.png 图2.jpg -o out.pdf
+
+# 图片格式/缩放
+python run.py image photo.png -o photo.jpg --max-size 800x600
+
+# 文本编码
+python run.py encoding file.txt -o out.txt --from-encoding gbk --to-encoding utf-8
+
+# 换行符
+python run.py line-endings file.txt -o out.txt
+python run.py line-endings file.txt -o out.txt --to-crlf
+```
 
 ## 项目结构
 
 ```
-├── index.html         # Vite 入口
-├── package.json
-├── vite.config.js
-├── public/
-│   └── data.csv
+├── README.md
+├── requirements.txt
+├── app.py              # Web 服务
+├── run.py              # CLI
+├── templates/
+├── static/
 └── src/
-    ├── App.jsx
-    ├── index.jsx
-    ├── App.css
-    ├── index.css
-    └── components/
-        ├── LineChart.jsx
-        ├── BarChart.jsx
-        └── ScatterPlot.jsx
+    ├── cli.py
+    └── converters/
 ```
 
 ## License
 
 MIT
-
----
-
-*文件转换器（图片转 PDF 等）已拆分为独立仓库： [image_to_PDF](https://github.com/Jie-web1/image_to_PDF)*
+# image_to_PDF
