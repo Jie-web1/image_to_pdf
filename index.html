@@ -1,58 +1,94 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>文件转换器 - 请本地运行</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0f0f12;
-      color: #e8e8ec;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      line-height: 1.6;
-    }
-    .card {
-      max-width: 420px;
-      background: #18181c;
-      border: 1px solid #2d2d35;
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-    }
-    h1 { font-size: 1.35rem; margin: 0 0 0.5rem; }
-    p { margin: 0 0 1rem; color: #8888a0; font-size: 0.95rem; }
-    code {
-      display: block;
-      text-align: left;
-      background: #222228;
-      padding: 1rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      overflow-x: auto;
-      margin: 0.5rem 0 1rem;
-    }
-    a {
-      color: #6ee7b7;
-      text-decoration: none;
-    }
-    a:hover { text-decoration: underline; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Converter | Image to PDF · Image &amp; Document Conversion</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="card">
-    <h1>文件转换器</h1>
-    <p>图片转 PDF、图片格式/缩放、编码与换行符转换。本应用需在本地运行，无法在网页中直接使用。</p>
-    <p><strong>本地运行步骤：</strong></p>
-    <code>git clone https://github.com/Jie-web1/image_to_PDF.git<br>cd image_to_PDF<br>pip install -r requirements.txt<br>python app.py</code>
-    <p>然后在浏览器打开 <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a></p>
-    <p><a href="https://github.com/Jie-web1/image_to_PDF">查看仓库 →</a></p>
+  <div class="app">
+    <header class="header">
+      <h1 class="logo">File Converter</h1>
+      <p class="tagline">Image to PDF · Image format · Document conversion · Runs in your browser</p>
+    </header>
+
+    <main class="main">
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="img2pdf" role="tab" aria-selected="true">Image → PDF</button>
+        <button type="button" class="tab" data-tab="img-format" role="tab" aria-selected="false">Image format</button>
+        <button type="button" class="tab" data-tab="text" role="tab" aria-selected="false">Text / encoding</button>
+      </nav>
+
+      <section id="panel-img2pdf" class="panel active" role="tabpanel">
+        <div class="card">
+          <h2>Image to PDF</h2>
+          <p>Select one or more images and merge them into a single PDF to download.</p>
+          <div class="dropzone" id="dropzone-pdf" data-accept="image/*">
+            <input type="file" id="input-pdf" accept="image/*" multiple hidden>
+            <span class="dropzone-text">Drag images here or click to choose</span>
+            <span class="dropzone-hint">JPG, PNG, WebP, GIF supported</span>
+          </div>
+          <div class="preview-list" id="preview-pdf"></div>
+          <div class="actions">
+            <button type="button" class="btn btn-secondary" id="clear-pdf">Clear</button>
+            <button type="button" class="btn btn-primary" id="convert-pdf" disabled>Create PDF</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="panel-img-format" class="panel" role="tabpanel" hidden>
+        <div class="card">
+          <h2>Image format conversion</h2>
+          <p>Upload an image, pick an output format, and download—all in your browser.</p>
+          <div class="dropzone" id="dropzone-img" data-accept="image/*">
+            <input type="file" id="input-img" accept="image/*" hidden>
+            <span class="dropzone-text">Drag or click to choose an image</span>
+          </div>
+          <div class="format-options" id="format-options" hidden>
+            <label>Output format:</label>
+            <select id="select-format">
+              <option value="image/png">PNG</option>
+              <option value="image/jpeg">JPEG</option>
+              <option value="image/webp">WebP</option>
+            </select>
+            <label class="quality-label" id="quality-label">Quality: <input type="range" id="quality" min="1" max="100" value="92"></label>
+            <button type="button" class="btn btn-primary" id="convert-img">Convert &amp; download</button>
+          </div>
+          <div class="preview-single" id="preview-img"></div>
+        </div>
+      </section>
+
+      <section id="panel-text" class="panel" role="tabpanel" hidden>
+        <div class="card">
+          <h2>Text / encoding</h2>
+          <p>Upload a text file to view it or re-download with a different encoding.</p>
+          <div class="dropzone" id="dropzone-text" data-accept=".txt,.json,.csv,.md,.xml,.html">
+            <input type="file" id="input-text" accept=".txt,.json,.csv,.md,.xml,.html,text/*" hidden>
+            <span class="dropzone-text">Drag or choose .txt, .json, .csv, .md, etc.</span>
+          </div>
+          <div class="text-options" id="text-options" hidden>
+            <label>Encoding:</label>
+            <select id="select-encoding">
+              <option value="utf-8">UTF-8</option>
+              <option value="utf-16">UTF-16</option>
+            </select>
+            <button type="button" class="btn btn-primary" id="download-text">Download with this encoding</button>
+          </div>
+          <pre class="text-preview" id="text-preview"></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>All conversions run in your browser. Your files are never uploaded.</p>
+    </footer>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
