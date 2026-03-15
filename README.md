@@ -30,6 +30,8 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173).
+OR
+https://jie-web1.github.io/data-visualization-dashboard/
 
 ## Build & Deploy to GitHub Pages
 
