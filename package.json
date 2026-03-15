@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://YOUR_USERNAME.github.io/data-visualization-dashboard",
+  "homepage": "https://Jie-web1.github.io/data-visualization-dashboard",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

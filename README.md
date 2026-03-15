@@ -1,100 +1,113 @@
-# 文件转换器 (File Converter)
+# 仓库说明
+
+本仓库包含两个独立项目，可分别运行。
+
+---
+
+## 1. 文件转换器 (File Converter)
 
 图片转 PDF、图片格式/缩放、文本编码与换行符转换。支持 **Web 前端** 与命令行。
 
-## 功能
+### 功能
 
 - **img2pdf**：多张图片合并为一个 PDF（支持 PNG、JPG、GIF、BMP、TIFF、WebP）
 - **图片转换**：格式转换（PNG/JPEG/WebP/BMP/TIFF）、按比例或最大宽高缩放
 - **文本编码**：UTF-8、GBK 等编码互转
 - **换行符**：LF ↔ CRLF 转换
 
-## 环境要求
+### 环境与安装
 
 - Python 3.8+
-- 依赖见 `requirements.txt`
+- `pip install -r requirements.txt`
 
-## 安装
+### 运行方式
 
-```bash
-git clone https://github.com/Jie-web1/data-visualization-dashboard.git
-cd data-visualization-dashboard
-pip install -r requirements.txt
-```
-
-## Web 前端（本地运行）
+**Web 前端：**
 
 ```bash
 python app.py
 ```
 
-浏览器打开 http://127.0.0.1:5000 ，使用页面上的表单完成图片转 PDF、图片格式/缩放、编码与换行符转换，结果会直接下载。文件仅在本地临时处理，不会上传到外部。
+浏览器打开 http://127.0.0.1:5000 ，使用页面完成转换，结果直接下载。文件仅在本地临时处理。
 
-## 命令行使用
-
-### 图片转 PDF
+**命令行：**
 
 ```bash
-# 多张图片 → 一个 PDF
-python -m src.cli img2pdf image1.png image2.jpg -o output.pdf
+# 图片 → PDF
+python run.py img2pdf 图1.png 图2.jpg -o out.pdf
 
-# 指定目录，递归收集图片
-python -m src.cli img2pdf ./photos -o album.pdf -r
+# 图片格式/缩放
+python run.py image photo.png -o photo.jpg --max-size 800x600
+
+# 文本编码
+python run.py encoding file.txt -o out.txt --from-encoding gbk --to-encoding utf-8
+
+# 换行符
+python run.py line-endings file.txt -o out.txt
+python run.py line-endings file.txt -o out.txt --to-crlf
 ```
 
-### 图片转换
+---
+
+## 2. 数据可视化看板 (Data Visualization Dashboard)
+
+基于 React 的交互式数据看板：全球经济与人口趋势图表与数据展示。
+
+### 功能
+
+- **GDP 趋势（折线图）**：多国 GDP 对比、悬停提示与国家选择
+- **人口排名（柱状图）**：Top 15 国家、年份选择、排序与动画
+- **GDP vs 预期寿命（散点图）**：关系探索与国家详情
+
+### 技术栈
+
+- 前端：React 18、Vite  
+- 图表：Chart.js、react-chartjs-2  
+- 数据：PapaParse (CSV)，World Bank 风格数据集  
+
+### 运行方式
 
 ```bash
-# 格式转换（由输出扩展名决定）
-python -m src.cli image photo.png -o photo.jpg
-
-# 指定最大尺寸（保持比例）
-python -m src.cli image large.png -o small.png --max-size 800x600
-
-# 按比例缩放
-python -m src.cli image large.png -o half.png --scale 0.5
-
-# 强制输出格式
-python -m src.cli image input.bmp -o out.webp -f webp
+npm install
+npm run dev
 ```
 
-### 文本编码转换
+打开 http://localhost:5173 。
+
+### 部署到 GitHub Pages
+
+1. 在 `package.json` 中把 `homepage` 改为你的 Pages 地址，例如：  
+   `"homepage": "https://Jie-web1.github.io/data-visualization-dashboard"`
+
+2. 部署：
 
 ```bash
-python -m src.cli encoding file.txt -o file_utf8.txt --from-encoding gbk --to-encoding utf-8
+npm run deploy
 ```
 
-### 换行符转换
+3. 仓库 **Settings → Pages → Source** 选择 **gh-pages** 分支。
 
-```bash
-# 转为 LF (Unix)
-python -m src.cli line-endings win.txt -o unix.txt
+---
 
-# 转为 CRLF (Windows)
-python -m src.cli line-endings unix.txt -o win.txt --to-crlf
-```
-
-## 项目结构
+## 项目结构概览
 
 ```
-file/
-├── README.md
-├── requirements.txt
-├── app.py                  # Web 服务入口
-├── run.py                  # CLI 入口
-├── templates/
-│   └── index.html         # 前端页面
-├── static/
-│   ├── style.css          # 样式
-│   └── app.js             # 前端逻辑
-└── src/
+├── app.py              # 文件转换器 Web 服务
+├── run.py              # 文件转换器 CLI
+├── requirements.txt   # Python 依赖
+├── templates/         # 文件转换器前端模板
+├── static/            # 文件转换器静态资源 (CSS/JS)
+├── index.html         # 数据看板 Vite 入口
+├── package.json       # 数据看板依赖与脚本
+├── vite.config.js    # Vite 配置
+├── public/            # 数据看板静态资源 (如 data.csv)
+└── src/               # 两项目共用目录
     ├── __init__.py
-    ├── cli.py             # 命令行入口
-    └── converters/
-        ├── __init__.py
-        ├── image_to_pdf.py
-        ├── image_convert.py
-        └── file_convert.py
+    ├── cli.py         # 文件转换器 CLI
+    ├── converters/    # 文件转换器逻辑
+    ├── App.jsx        # 数据看板主组件
+    ├── index.jsx      # 数据看板入口
+    └── components/    # 数据看板图表组件
 ```
 
 ## License
