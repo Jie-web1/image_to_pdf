@@ -1,15 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Interactive Global Data Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/index.jsx"></script>
-  </body>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>文件转换器 - 请本地运行</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f0f12;
+      color: #e8e8ec;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      line-height: 1.6;
+    }
+    .card {
+      max-width: 420px;
+      background: #18181c;
+      border: 1px solid #2d2d35;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 { font-size: 1.35rem; margin: 0 0 0.5rem; }
+    p { margin: 0 0 1rem; color: #8888a0; font-size: 0.95rem; }
+    code {
+      display: block;
+      text-align: left;
+      background: #222228;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin: 0.5rem 0 1rem;
+    }
+    a {
+      color: #6ee7b7;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>文件转换器</h1>
+    <p>图片转 PDF、图片格式/缩放、编码与换行符转换。本应用需在本地运行，无法在网页中直接使用。</p>
+    <p><strong>本地运行步骤：</strong></p>
+    <code>git clone https://github.com/Jie-web1/image_to_PDF.git<br>cd image_to_PDF<br>pip install -r requirements.txt<br>python app.py</code>
+    <p>然后在浏览器打开 <a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a></p>
+    <p><a href="https://github.com/Jie-web1/image_to_PDF">查看仓库 →</a></p>
+  </div>
+</body>
 </html>
